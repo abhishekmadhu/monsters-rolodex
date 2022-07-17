@@ -15,6 +15,19 @@ class App extends Component {
     };
   }
 
+  onSearchChange = (event) => {
+    console.log('onSearchChange-begin');
+    // console.log(event.target.value);
+    this.setState(() => {
+      return {
+        filterString: event.target.value
+      };
+    },
+      () => {
+      // console.log(this.state);
+    });
+  }
+
   // 
   componentDidMount() {
     console.log('componentDidMount-begin');
@@ -25,7 +38,7 @@ class App extends Component {
           return { monsters: users }; 
         },
           () => {
-          console.log(this.state);
+          // console.log(this.state);
         })
       });
   }
@@ -34,22 +47,19 @@ class App extends Component {
     console.log('render-begin');
     return (
       <div className="App">
-        <input className='search-box' type='search' placeholder='search monsters' onChange={
-          (event) => {
-            console.log(event.target.value);
-            this.setState(() => {
-              return {
-                filterString: event.target.value
-              };
-            });
-            return null;
-          }
-        } />
+        <input
+          className='search-box'
+          type='search'
+          placeholder='search monsters'
+          onChange={this.onSearchChange}
+        />
         {
           this.state.monsters.filter((monster) => {
-            return monster.name.toString().toLowerCase().includes(this.state.filterString);
+            // console.log(monster.name, this.state.filterString);
+            return monster.name.toString().toLowerCase().includes(this.state.filterString.toLowerCase());
           }).map(
             (monster) => {
+              // console.log('map', monster.name);
               return <div key={monster.name}>
                 <h1>{monster.name}</h1>
               </div>
