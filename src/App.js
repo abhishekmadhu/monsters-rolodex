@@ -2,6 +2,9 @@ import { Component } from 'react';
 
 import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component'
+import TextBox from "./components/functional-component-text-box/functional-component-text-box.component.jsx";
+
+import Editor from "@monaco-editor/react";
 
 import './App.css';
 
@@ -13,16 +16,20 @@ class App extends Component {
 
     this.state = {
       monsters: [],
-      filterString: ''
+      filterString: '',
+      testPlaceHolder: 'placeholder'
     };
   }
 
   onSearchChange = (event) => {
     console.log('onSearchChange-begin');
     // console.log(event.target.value);
+    const value = event.target.value;
+
     this.setState(() => {
       return {
-        filterString: event.target.value
+        filterString: value,
+        // testPlaceHolder: 'placeholder ' + value
       };
     },
       () => {
@@ -48,7 +55,7 @@ class App extends Component {
   render() {
     console.log('render-begin');
 
-    const { monsters, filterString } = this.state;
+    const { monsters, filterString, testPlaceHolder } = this.state;
     const { onSearchChange } = this;
 
     const filteredMonsters = monsters.filter((monster) => {
@@ -59,6 +66,12 @@ class App extends Component {
 
       <div className="App">
 
+        {/* <Editor
+          height="100vh"
+          defaultLanguage='python'
+          defaultValue='# write some python code here'
+        /> */}
+
         <h1 className='app-title'>Monsters Rolodex</h1>
 
         <SearchBox
@@ -66,6 +79,8 @@ class App extends Component {
           placeholder='search monsters'
           className='monsters-search-box'
         />
+        
+        {/* <TextBox placeholder={ testPlaceHolder }></TextBox> */}
         <CardList monsters={ filteredMonsters }  />
       </div>
     );
